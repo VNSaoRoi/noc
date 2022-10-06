@@ -1,0 +1,75 @@
+#!/bin/bash
+
+# How to use:
+#
+#This script use to remove space or newline character or both from your file:
+#
+#Happy life.
+#
+TEMP="-h for more detail
+	SRVN
+"
+# Condition 0:
+# 
+# Condition 0.1:
+if [[ $1 == "sp" ]]
+then
+	sed -r 's/\s+//g' $2;
+	
+	# Condition 0.2
+	elif [[ $1 == "nl" ]]
+	then
+		sed ':a;N;$!ba;s/\n/ /g' $2;
+	
+	# Condition 0.3
+	elif [[ $1 == "bo" ]]
+	then
+		tr -d '[:blank:]&\n'< $2;
+
+# Condition 1:
+	
+	# Condition 1.1:
+	elif [[ "$1" == "-new" ]] && [[ "$2" == "sp" ]]
+	then
+		sed -r 's/\s+//g' $3 > $4;
+	# Condition 1.2:
+	elif [[ "$1" == "-new" ]] && [[ "$2" == "nl" ]]
+	then
+		sed ':a;N;$!ba;s/\n/ /g' $3 > $4;
+	# Condition 1.3:
+	elif [[ "$1" == "-new" ]] && [[ "$2" == "bo" ]]
+	then
+		sed ':a;N;$!ba;s/\n/ /g' $3 > /tmp/nos.tmp ; sed -r 's/\s+//g' /tmp/nos.tmp > $4;
+		
+# Condition 2: 
+	
+	# Condition 2.1:
+	elif [[ "$1" == "-rem" ]] && [[ "$2" == "sp" ]]
+        then
+		tr -d '[:blank:]' < $3 > /tmp/nos.tmp; cat /tmp/nos.tmp > $3;
+	# Condition 2.2:
+	elif [[ "$1" == "-rem" ]] && [[ "$2" == "nl" ]]
+	then
+		tr -d '\n' < $3 > /tmp/nos.tmp; cat /tmp/nos.tmp > $3;
+	# Condition 2.3:
+	elif [[ "$1" == "-rem" ]] && [[ "$2" == "bo" ]]
+	then
+		tr -d '[:blank:]&\n'< $3 > /tmp/nos.tmp; cat /tmp/nos.tmp > $3;
+# Condition 3:	
+	elif [[ $1 == "-h" ]]
+	then
+		echo ' 
++++ If just want view result +++
+  ./noc [sp,nl,bo] ./path/to/original/file
+ 
++++ If you want print result to new file +++
+  ./noc -new [sp,nl,bo] ./path/to/original/file ./new/file
+
++++ If you want to direct change original file +++
+  ./noc -rem [sp,nl,bo] ./path/to/original/file 
+		
+	SRVN  
+		       '
+	else
+		echo $TEMP
+fi
