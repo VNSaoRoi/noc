@@ -67,7 +67,10 @@ then
 
 +++ If you want to direct change original file +++
   ./noc -rem [sp,nl,bo] ./path/to/original/file 
-		
+  
+ ###	sp: space
+ ###	nl: newline
+ ###	bo: both
 	SRVN  
 		       '
 	else
